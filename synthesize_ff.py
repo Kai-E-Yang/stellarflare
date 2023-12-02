@@ -84,21 +84,29 @@ class synthesize_ff():
         
     def I_ff(self):
         tau=self.kappa_mu_ff()*self.D
-        # out=self.plank_function(self.temperature)*(1-np.exp(-1*tau))
         out=self.plank_function(self.temperature)*tau
         return out
+
     def I_pa(self):
-        F=1.166e14/self.temperature**1.5*self.plank_function(self.temperature)*(1-np.exp(-self.h*self.mu/self.kb/self.temperature))/(self.PaschenI*self.mu)**3*self.D*np.exp(self.h*self.c/self.Paschen/self.kb/self.temperature)
-        return F*self.rho**2
+        tau=self.D*self.kappa_mu_pa()
+        F=tau*self.plank_function(self.temperature)
+        return F
+
     def I_br(self):
-        F=1.166e14/self.temperature**1.5*self.plank_function(self.temperature)*(1-np.exp(-self.h*self.mu/self.kb/self.temperature))/(self.BrackettI*self.mu)**3*self.D*np.exp(self.h*self.c/self.Brackett/self.kb/self.temperature)
-        return F*self.rho**2
+        tau=self.D*self.kappa_mu_br()
+        F=tau*self.plank_function(self.temperature)
+        return F
+
     def I_pf(self):
-        F=1.166e14/self.temperature**1.5*self.plank_function(self.temperature)*(1-np.exp(-self.h*self.mu/self.kb/self.temperature))/(self.PfundI*self.mu)**3*self.D*np.exp(self.h*self.c/self.Pfund/self.kb/self.temperature)
-        return F*self.rho**2
+        tau=self.D*self.kappa_mu_pf()
+        F=tau*self.plank_function(self.temperature)
+        return F
+
     def I_hu(self):
-        F=1.166e14/self.temperature**1.5*self.plank_function(self.temperature)*(1-np.exp(-self.h*self.mu/self.kb/self.temperature))/(self.HumphreysI*self.mu)**3*self.D*np.exp(self.h*self.c/self.Humphreys/self.kb/self.temperature)
-        return F*self.rho**2
+        tau=self.D*self.kappa_mu_hu()
+        F=tau*self.plank_function(self.temperature)
+        return F
+
     def I_total(self):
         tau_total=self.tau_ff()+self.tau_pa()+self.tau_br()+self.tau_pf()+self.tau_hu()
         F=self.plank_function(self.temperature)*(1-np.exp(-1*tau_total))
